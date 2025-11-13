@@ -1,3 +1,6 @@
+<!-- npm run start in backend -->
+
+
 cd "c:\Users\vishn\OneDrive\Desktop\MiniProjects\AI vs Real Image\backend"
 python -m venv .venv; .venv\Scripts\Activate.ps1
 pip install -r requirements.txt

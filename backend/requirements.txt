@@ -1,7 +1,0 @@
-Flask>=2.2
-flask-cors
-numpy
-Pillow
-opencv-python-headless
-gunicorn
-python-magic-bin   # optional; Windows-friendly python-magic
