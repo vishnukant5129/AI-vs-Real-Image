@@ -66,82 +66,89 @@ export default function App(){
   }
 
   return (
-    <div style={{fontFamily:'Inter, system-ui', background:'#0f1724', minHeight:'100vh', color:'#e6e6ff', padding:24}}>
-      <h1 style={{fontSize:28, marginBottom:12}}>AI vs Real</h1>
+    <div className="min-h-screen p-6 bg-[#0f1724] text-[#e6e6ff] font-sans">
+      <h1 className="text-[28px] mb-3">AI vs Real</h1>
 
-      <div style={{background:'#0b1220', padding:18, borderRadius:12}}>
-        <div style={{display:'flex',gap:12, flexWrap:'wrap'}}>
-          <div style={{flex:1, minWidth:260}}>
+      <div className="bg-[#0b1220] p-5 rounded-xl">
+        <div className="flex gap-3 flex-wrap">
+          <div className="flex-1 min-w-[260px]">
             <div
-              style={{border:'2px dashed #334155', padding:20, borderRadius:10, cursor:'pointer'}}
+              className="border-2 border-dashed border-[#334155] p-5 rounded-lg cursor-pointer"
               onClick={pickFile}
               onDragOver={(e)=>e.preventDefault()}
               onDrop={(e)=>{ e.preventDefault(); const f = e.dataTransfer.files[0]; if(f){ setFile(f); setPreview(URL.createObjectURL(f)); setResult(null); } }}
             >
               {preview
-                ? <img src={preview} alt="preview" style={{maxWidth:'100%'}} />
-                : <div style={{padding:30, textAlign:'center'}}>Click to select or drop file (JPG/PNG/WebP)</div>
+                ? <img src={preview} alt="preview" className="w-full object-contain" />
+                : <div className="py-8 text-center">Click to select or drop file (JPG/PNG/WebP)</div>
               }
-              <input ref={fileRef} type="file" accept="image/*" style={{display:'none'}} onChange={onFile} />
+              <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onFile} />
             </div>
 
-            <div style={{marginTop:12}}>
-              <button onClick={analyze} disabled={loading || !file} style={{padding:'10px 16px', background:'#6d28d9', color:'#fff', border:'none', borderRadius:8}}>
+            <div className="mt-3">
+              <button
+                onClick={analyze}
+                disabled={loading || !file}
+                className={`px-4 py-2 rounded-lg text-white ${loading || !file ? 'opacity-50 cursor-not-allowed bg-[#6d28d9]' : 'bg-[#6d28d9]'}`}
+              >
                 {loading ? 'Analyzing...' : 'Analyze Image'}
               </button>
-              <button onClick={()=>{ setFile(null); setPreview(null); setResult(null); }} style={{marginLeft:8, padding:'10px 12px', borderRadius:8, background:'#111827', color:'#cbd5e1', border:'1px solid #374151'}}>
+              <button
+                onClick={()=>{ setFile(null); setPreview(null); setResult(null); }}
+                className="ml-2 px-3 py-2 rounded-lg bg-[#111827] text-[#cbd5e1] border border-[#374151]"
+              >
                 Clear
               </button>
             </div>
           </div>
 
-          <div style={{width:360}}>
-            <h3>Result</h3>
-            {loading && <div style={{padding:12}}>Processing...</div>}
+          <div className="w-[360px]">
+            <h3 className="text-lg font-semibold">Result</h3>
+            {loading && <div className="p-3">Processing...</div>}
             {result && (
-              <div style={{background:'#07102a', padding:12, borderRadius:8}}>
-                <div style={{fontWeight:700}}>{result.result || 'No result'}</div>
+              <div className="bg-[#07102a] p-3 rounded-md">
+                <div className="font-bold">{result.result || 'No result'}</div>
                 <div>AI: {typeof result.aiConfidence !== 'undefined' ? result.aiConfidence + '%' : 'N/A'}</div>
                 <div>Real: {typeof result.realConfidence !== 'undefined' ? result.realConfidence + '%' : 'N/A'}</div>
 
-                <div style={{marginTop:8}}>
-                  <div style={{fontWeight:600}}>Details</div>
-                  <ul>
+                <div className="mt-2">
+                  <div className="font-semibold">Details</div>
+                  <ul className="list-disc list-inside">
                     {Array.isArray(result.details) && result.details.length > 0
                       ? result.details.map((d,i)=>(<li key={i}>{d}</li>))
                       : <li>No details available</li>
                     }
                   </ul>
 
-                  {result.imageUrl &&
-                    <div style={{marginTop:8}}>
-                      <img src={fullImageUrl(result.imageUrl)} style={{maxWidth:'100%'}} alt="analyzed" />
+                  {/* {result.imageUrl &&
+                    <div className="mt-2">
+                      <img src={fullImageUrl(result.imageUrl)} className="w-full object-contain" alt="analyzed" />
                     </div>
-                  }
+                  } */}
                 </div>
               </div>
             )}
           </div>
         </div>
 
-        <div style={{marginTop:20}}>
-          <h3>Recent analyses</h3>
-          <div style={{display:'flex', gap:12, flexWrap:'wrap'}}>
+        <div className="mt-5">
+          <h3 className="text-lg font-semibold">Recent analyses</h3>
+          <div className="flex gap-3 flex-wrap mt-2">
             {Array.isArray(history) && history.length > 0 ? history.map(h=>(
-              <div key={h._id || h.id || Math.random()} style={{background:'#07102a', padding:8, borderRadius:8, width:220}}>
-                <div style={{fontWeight:700, fontSize:14}}>{h.result}</div>
-                <div style={{fontSize:12}}>AI: {h.aiConfidence}%</div>
-                <div style={{fontSize:12}}>File: {h.filename}</div>
-                <div style={{fontSize:11, color:'#9ca3af'}}>{h.createdAt ? new Date(h.createdAt).toLocaleString() : ''}</div>
+              <div key={h._id || h.id || Math.random()} className="bg-[#07102a] p-2 rounded-md w-[220px]">
+                <div className="font-bold text-sm">{h.result}</div>
+                <div className="text-xs">AI: {h.aiConfidence}%</div>
+                <div className="text-sm">File: {h.filename}</div>
+                <div className="text-xs text-[#9ca3af]">{h.createdAt ? new Date(h.createdAt).toLocaleString() : ''}</div>
               </div>
             )) : <div>Nothing yet</div>}
           </div>
         </div>
       </div>
 
-      <div style={{marginTop:20}}>
+      {/* <div className="mt-5">
         <small>Server expects MongoDB running (see server/.env.example)</small>
-      </div>
+      </div> */}
     </div>
   )
 }
