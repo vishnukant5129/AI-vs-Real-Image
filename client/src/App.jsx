@@ -67,7 +67,7 @@ export default function App(){
 
   return (
     <div style={{fontFamily:'Inter, system-ui', background:'#0f1724', minHeight:'100vh', color:'#e6e6ff', padding:24}}>
-      <h1 style={{fontSize:28, marginBottom:12}}>AI vs Real — Demo (MERN)</h1>
+      <h1 style={{fontSize:28, marginBottom:12}}>AI vs Real</h1>
 
       <div style={{background:'#0b1220', padding:18, borderRadius:12}}>
         <div style={{display:'flex',gap:12, flexWrap:'wrap'}}>
