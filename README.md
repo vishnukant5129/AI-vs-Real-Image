@@ -1,4 +1,4 @@
-# AI-vs-Real MERN
+# AI-vs-Real 
 
 ## Quick start (dev)
 1. Ensure MongoDB is running (local or Atlas).
