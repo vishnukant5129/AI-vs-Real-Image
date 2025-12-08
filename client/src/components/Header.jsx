@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from "framer-motion";
+
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -28,11 +30,10 @@ export default function Header() {
   ];
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'bg-[#0b1220]/95 backdrop-blur-lg shadow-xl border-b border-[#1e293b]' 
-        : 'bg-[#0b1220]/80 backdrop-blur-md border-b border-[#1e293b]/50'
-    }`}>
+    <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled
+      ? 'bg-[#0b1220]/95 backdrop-blur-lg shadow-xl border-b border-[#1e293b]'
+      : 'bg-[#0b1220]/80 backdrop-blur-md border-b border-[#1e293b]/50'
+      }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo & Brand */}
@@ -41,8 +42,8 @@ export default function Header() {
               <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-purple-600 via-blue-500 to-cyan-400 rounded-lg 
                            flex items-center justify-center animate-pulse group-hover:animate-spin transition-transform">
                 <svg className="w-6 h-6 lg:w-7 lg:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
               </div>
               {/* Live indicator */}
@@ -62,14 +63,12 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
             {navItems.map((item, index) => (
-              <a key={index} href={item.href} 
-                 className={`relative group text-sm font-medium transition-all ${
-                   item.active ? 'text-[#e6e6ff]' : 'text-[#94a3b8] hover:text-[#e6e6ff]'
-                 }`}>
+              <a key={index} href={item.href}
+                className={`relative group text-sm font-medium transition-all ${item.active ? 'text-[#e6e6ff]' : 'text-[#94a3b8] hover:text-[#e6e6ff]'
+                  }`}>
                 {item.name}
-                <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-purple-600 to-cyan-400 transition-all duration-300 ${
-                  item.active ? 'w-full' : 'w-0 group-hover:w-full'
-                }`}></span>
+                <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-purple-600 to-cyan-400 transition-all duration-300 ${item.active ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
               </a>
             ))}
           </nav>
@@ -79,10 +78,10 @@ export default function Header() {
             <div className="bg-[#07102a] px-3 py-2 rounded-lg border border-[#1e293b] hover:border-[#334155] transition-all">
               <div className="flex items-center space-x-2">
                 <svg className="w-4 h-4 text-[#94a3b8] group-hover:text-[#e6e6ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
                 <div>
                   <p className="text-xs text-[#94a3b8]">Detections</p>
@@ -100,7 +99,7 @@ export default function Header() {
 
           {/* Mobile Menu Toggle */}
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="md:hidden text-[#e6e6ff] hover:text-[#94a3b8] transition-colors p-2">
+            className="md:hidden text-[#e6e6ff] hover:text-[#94a3b8] transition-colors p-2">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMobileMenuOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -113,17 +112,15 @@ export default function Header() {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden transition-all duration-300 overflow-hidden backdrop-blur-sm ${
-        isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-      }`}>
+      <div className={`md:hidden transition-all duration-300 overflow-hidden backdrop-blur-sm ${isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}>
         <nav className="px-4 pb-4 space-y-1 bg-[#0b1220]/95 border-t border-[#1e293b]">
           {navItems.map((item, index) => (
-            <a key={index} href={item.href} 
-               className={`block px-3 py-3 rounded-md text-sm transition-all ${
-                 item.active 
-                   ? 'bg-[#07102a] text-[#e6e6ff] border-l-4 border-purple-600' 
-                   : 'text-[#94a3b8] hover:text-[#e6e6ff] hover:bg-[#07102a]'
-               }`}>
+            <a key={index} href={item.href}
+              className={`block px-3 py-3 rounded-md text-sm transition-all ${item.active
+                ? 'bg-[#07102a] text-[#e6e6ff] border-l-4 border-purple-600'
+                : 'text-[#94a3b8] hover:text-[#e6e6ff] hover:bg-[#07102a]'
+                }`}>
               {item.name}
             </a>
           ))}

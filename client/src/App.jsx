@@ -10,6 +10,7 @@ export default function App() {
   const [preview, setPreview] = useState(null);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [result, setResult] = useState(null);
   const [history, setHistory] = useState([]);
 
@@ -17,6 +18,8 @@ export default function App() {
     setFile(selectedFile);
     setPreview(URL.createObjectURL(selectedFile));
     setResult(null);
+    // start analysis automatically when a file is selected
+    analyzeFile(selectedFile);
   };
 
   const handleClear = () => {
@@ -25,14 +28,17 @@ export default function App() {
     setResult(null);
   };
 
-  const handleAnalyze = async () => {
-    if (!file) return alert('Select a file first');
+  const analyzeFile = async (fileToAnalyze) => {
+    if (!fileToAnalyze) return;
 
     setLoading(true);
     setResult(null);
+    setUploadProgress(0);
 
     try {
-      const analysisResult = await analyzeImage(file);
+      const analysisResult = await analyzeImage(fileToAnalyze, (percent) => {
+        setUploadProgress(percent);
+      });
       setResult(analysisResult);
       loadHistory();
     } catch (error) {
@@ -40,8 +46,11 @@ export default function App() {
       alert('Analysis failed — check console for details');
     } finally {
       setLoading(false);
+      setUploadProgress(0);
     }
   };
+
+  const handleAnalyze = () => analyzeFile(file);
 
   const loadHistory = async () => {
     try {
@@ -78,9 +87,10 @@ export default function App() {
                 preview={preview}
                 loading={loading}
                 file={file}
+                uploadProgress={uploadProgress}
               />
 
-              <div className="w-[360px]">
+              <div className="w-full">
                 <h3 className="text-lg font-semibold mb-2 text-[#cbd5e1]">Result</h3>
                 <ResultDisplay result={result} loading={loading} />
               </div>
