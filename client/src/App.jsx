@@ -3,7 +3,7 @@ import { analyzeImage, fetchHistory, API_BASE } from './api';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ImageUploader from './components/ImageUploader';
-import ResultDisplay from './components/ResultDisplay';
+import CircularResultDisplay from './components/CircularResultDisplay';
 import HistoryPanel from './components/HistoryPanel';
 
 export default function App() {
@@ -79,20 +79,25 @@ export default function App() {
 
         <main className="flex-1">
           <div className="bg-[#0b1220] p-5 rounded-xl border border-[#1e293b]">
-            <div className="flex gap-3 flex-wrap">
-              <ImageUploader
-                onFileSelect={handleFileSelect}
-                onAnalyze={handleAnalyze}
-                onClear={handleClear}
-                preview={preview}
-                loading={loading}
-                file={file}
-                uploadProgress={uploadProgress}
-              />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-[#cbd5e1]">Upload Image</h3>
+                <ImageUploader
+                  onFileSelect={handleFileSelect}
+                  onAnalyze={handleAnalyze}
+                  onClear={handleClear}
+                  preview={preview}
+                  loading={loading}
+                  file={file}
+                  uploadProgress={uploadProgress}
+                />
+              </div>
 
-              <div className="w-full">
-                <h3 className="text-lg font-semibold mb-2 text-[#cbd5e1]">Result</h3>
-                <ResultDisplay result={result} loading={loading} />
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-[#cbd5e1]">Analysis Result</h3>
+                <div className="bg-[#07102a] rounded-lg border border-[#1e293b] p-4">
+                  <CircularResultDisplay result={result} loading={loading} />
+                </div>
               </div>
             </div>
 
