@@ -1,0 +1,11 @@
+const rateLimit = require('express-rate-limit');
+const config = require('../config');
+
+const limiter = rateLimit({
+  windowMs: config.rateLimitWindowMs,
+  max: config.rateLimitMax,
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+module.exports = limiter;
