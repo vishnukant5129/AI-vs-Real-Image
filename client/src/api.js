@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-export const API_BASE = 'http://localhost:5000';
+// Use Vite env var `VITE_API_BASE` for production or absolute backend URLs.
+// For local development leave it empty so Vite dev server proxy (vite.config.js)
+// will forward `/api` requests to the backend.
+export const API_BASE = import.meta.env.VITE_API_BASE ?? '';
 
 export async function analyzeImage(imageFile, onUploadProgress) {
   const formData = new FormData();
@@ -29,4 +32,9 @@ export async function fetchHistory() {
   return Array.isArray(response.data) 
     ? response.data 
     : (response.data?.list ? response.data.list : []);
+}
+
+export async function fetchAnalysisById(id) {
+  const response = await axios.get(`${API_BASE}/api/history/${id}`);
+  return response.data;
 }

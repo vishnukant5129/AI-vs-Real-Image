@@ -1,13 +1,14 @@
 import React from 'react';
 
-export default function HistoryPanel({ history }) {
+export default function HistoryPanel({ history, onSelect }) {
   return (
     <div className="flex gap-3 flex-wrap mt-2">
       {Array.isArray(history) && history.length > 0 ? (
         history.map(item => (
-          <div 
-            key={item._id || item.id || Math.random()} 
-            className="bg-[#07102a] p-3 rounded-md w-[220px] border border-[#1e293b] hover:border-[#334155] transition-colors"
+          <button
+            key={item._id || item.id || Math.random()}
+            onClick={() => onSelect && onSelect(item._id || item.id)}
+            className="text-left bg-[#07102a] p-3 rounded-md w-[220px] border border-[#1e293b] hover:border-[#334155] transition-colors focus:outline-none"
           >
             <div className="font-bold text-sm mb-1 text-[#e6e6ff]">
               {item.result}
@@ -19,7 +20,7 @@ export default function HistoryPanel({ history }) {
                 {item.createdAt ? new Date(item.createdAt).toLocaleString() : ''}
               </div>
             </div>
-          </div>
+          </button>
         ))
       ) : (
         <div className="text-[#94a3b8]">No analyses yet</div>

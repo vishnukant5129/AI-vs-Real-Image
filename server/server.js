@@ -126,16 +126,31 @@ app.get('/api/history', async (req, res) => {
   res.json(list);
 });
 
-// const server = app.listen(PORT, () => {
-//   console.log(`🚀 Server running on http://localhost:${PORT}`);
-// });
+app.get('/api/history/:id', async (req, res) => {
+  try {
+    if (mongoose.connection.readyState !== 1) return res.status(503).json({ error: 'DB unavailable' });
+    const doc = await Analysis.findById(req.params.id);
+    if (!doc) return res.status(404).json({ error: 'Not found' });
+    res.json(doc);
+  } catch (err) {
+    console.error('History item fetch error:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
-// server.on('error', err => {
-//   if (err.code === 'EADDRINUSE') {
-//     console.error(`❌ Port ${PORT} already in use. Stop other server first.`);
-//     process.exit(1);
-//   } else {
-//     console.error('Server error:', err);
-//   }
-// });
+if (require.main === module) {
+  const server = app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+  });
+
+  server.on('error', err => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`❌ Port ${PORT} already in use. Stop other server first.`);
+      process.exit(1);
+    } else {
+      console.error('Server error:', err);
+    }
+  });
+}
+
 module.exports = app;

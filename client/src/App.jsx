@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { analyzeImage, fetchHistory, API_BASE } from './api';
+import { analyzeImage, fetchHistory, fetchAnalysisById, API_BASE } from './api';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ImageUploader from './components/ImageUploader';
@@ -66,6 +66,21 @@ export default function App() {
     loadHistory();
   }, []);
 
+  const handleSelectHistory = async (id) => {
+    if (!id) return;
+    setLoading(true);
+    setResult(null);
+    try {
+      const full = await fetchAnalysisById(id);
+      setResult(full);
+    } catch (err) {
+      console.error('Failed to load history item', err);
+      alert('Failed to fetch analysis from backend');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const fullImageUrl = (url) => {
     if (!url) return null;
     if (url.startsWith('http') || url.startsWith('data:')) return url;
@@ -103,7 +118,7 @@ export default function App() {
 
             <div className="mt-5">
               <h3 className="text-lg font-semibold mb-2 text-[#cbd5e1]">Recent analyses</h3>
-              <HistoryPanel history={history} />
+              <HistoryPanel history={history} onSelect={handleSelectHistory} />
             </div>
           </div>
         </main>
