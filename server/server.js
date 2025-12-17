@@ -126,15 +126,16 @@ app.get('/api/history', async (req, res) => {
   res.json(list);
 });
 
-const server = app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+// const server = app.listen(PORT, () => {
+//   console.log(`🚀 Server running on http://localhost:${PORT}`);
+// });
 
-server.on('error', err => {
-  if (err.code === 'EADDRINUSE') {
-    console.error(`❌ Port ${PORT} already in use. Stop other server first.`);
-    process.exit(1);
-  } else {
-    console.error('Server error:', err);
-  }
-});
+// server.on('error', err => {
+//   if (err.code === 'EADDRINUSE') {
+//     console.error(`❌ Port ${PORT} already in use. Stop other server first.`);
+//     process.exit(1);
+//   } else {
+//     console.error('Server error:', err);
+//   }
+// });
+module.exports = app;
