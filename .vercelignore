@@ -1,0 +1,12 @@
+# Ignore server and uploads - frontend-only deploys
+server/
+server/**
+server/*
+public/uploads/
+**/node_modules
+**/dist
+.env
+.env.local
+.vercel
+*.log
+README.md
